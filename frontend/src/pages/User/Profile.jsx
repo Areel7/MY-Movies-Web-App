@@ -20,32 +20,30 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
     setUsername(userInfo.username);
     setEmail(userInfo.email);
-
   }, [userInfo.email, userInfo.username]);
 
-    const submitHandler = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
-    }else{
-    try {
-      const res = await updateProfile({
-        id: userInfo._id,
-        username,
-        email,
-        password,
-      }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      toast.success("Profile updated successfully");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    } else {
+      try {
+        const res = await updateProfile({
+          id: userInfo._id,
+          username,
+          email,
+          password,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        toast.success("Profile updated successfully");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
-    }
-    };
+  };
 
   return (
     <div>
